@@ -1,4 +1,4 @@
-Certainly! Here's an example of a README file for an intrusion detection system for ATM booths using pose estimation and object detection:
+ README file for an intrusion detection system for ATM booths using pose estimation and object detection:
 
 # Intrusion Detection System for ATM Booths
 
