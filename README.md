@@ -22,35 +22,6 @@ This repository contains code for an Intrusion Detection System (IDS) designed s
 - TensorFlow
 - Other dependencies (specified in requirements.txt)
 
-## Usage
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/your-username/intrusion-detection-system.git
-```
-
-2. Install the required dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-3. Run the intrusion detection system:
-
-```bash
-python main.py
-```
-
-4. Follow the on-screen instructions to set up the system and view the live monitoring of the ATM booth.
-
-## Contributing
-
-Contributions are welcome! If you encounter any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgements
 
