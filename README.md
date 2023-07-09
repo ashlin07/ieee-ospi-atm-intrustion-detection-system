@@ -70,6 +70,6 @@ Please note that this intrusion detection system is a proof-of-concept and may n
 
 ## Contact
 
-For any inquiries or questions, please contact [your-email@example.com](mailto:your-email@example.com).
+For any inquiries or questions, please contact [furtadoashlin@gmail.com](mailto:furtadoashlin@gmail.com).
 
 Feel free to customize and enhance the README file according to your specific project needs.
