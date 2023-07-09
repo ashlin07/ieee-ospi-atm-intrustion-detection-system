@@ -31,9 +31,7 @@ This project utilizes the following open-source libraries and frameworks:
 - TensorFlow: [https://github.com/tensorflow/tensorflow](https://github.com/tensorflow/tensorflow)
 - OpenCV: [https://github.com/opencv/opencv](https://github.com/opencv/opencv)
 
-## References
 
-Include any relevant references or citations to external resources or research papers, if applicable.
 
 ## Disclaimer
 
