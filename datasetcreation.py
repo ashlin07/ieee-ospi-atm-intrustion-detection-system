@@ -17,8 +17,8 @@ with open('coords.csv', mode='a', newline='') as f:
     csv_writer.writerow(landmarks)
 len(landmarks)
 
-class_name="Normal"
-cap = cv2.VideoCapture('normal.mp4')
+class_name="Suspicious"
+cap = cv2.VideoCapture('suspicious.mp4')
 with mp_pose.Pose(min_detection_confidence = 0.5,min_tracking_confidence = 0.5) as pose:
     while cap.isOpened():
         ret,frame = cap.read()
