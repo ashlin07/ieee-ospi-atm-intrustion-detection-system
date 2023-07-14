@@ -54,21 +54,21 @@ def receive_live_video(server_port):
         
             
             # Check if the person is standing based on the ankle y-coordinate difference
-            prediction = model.predict(X_dataset[].reshape(1,33*(4)),verbose=None)
-            prediction_p = tf.nn.softmax(prediction)
-            yhat = np.argmax(prediction_p)
-            if yhat== 0:  # Adjust the threshold as needed
-                
-                text = "Normal"
-            elif yhat==1:
-                text = "Looking back left"
-            elif yhat==2:
-                text="Looking back right"
-            else:
-                text="Suspicious"
+        prediction = model.predict(X_dataset[].reshape(1,33*(4)),verbose=None)
+        prediction_p = tf.nn.softmax(prediction)
+        yhat = np.argmax(prediction_p)
+        if yhat== 0:  # Adjust the threshold as needed
             
-            # Display the standing status on the frame
-            cv2.putText(frame, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+            text = "Normal"
+        elif yhat==1:
+            text = "Looking back left"
+        elif yhat==2:
+            text="Looking back right"
+        else:
+            text="Suspicious"
+        
+        # Display the standing status on the frame
+        cv2.putText(frame, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
         
         # Display the frame
         cv2.imshow("Atm intrusion detection", frame)
