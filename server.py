@@ -50,11 +50,11 @@ def receive_live_video(server_port):
         # Process the frame with the Pose model
         results = pose.process(frame_rgb)
         
-        # Check if any pose landmarks are detected
+        
         
             
             # Check if the person is standing based on the ankle y-coordinate difference
-            prediction = model.predict(X_dataset[random_index].reshape(1,33*(4)),verbose=None)
+            prediction = model.predict(X_dataset[].reshape(1,33*(4)),verbose=None)
             prediction_p = tf.nn.softmax(prediction)
             yhat = np.argmax(prediction_p)
             if yhat== 0:  # Adjust the threshold as needed
@@ -71,7 +71,7 @@ def receive_live_video(server_port):
             cv2.putText(frame, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
         
         # Display the frame
-        cv2.imshow("Standing Position Detection", frame)
+        cv2.imshow("Atm intrusion detection", frame)
 
         
         
