@@ -39,6 +39,6 @@ def send_live_video(server_ip, server_port):
     client_socket.close()
 
 
-server_ip = "192.168.29.238"  
+server_ip = "192.168.29.51"  
 server_port = 8000  
 send_live_video(server_ip, server_port)
