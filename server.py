@@ -4,9 +4,7 @@ import pickle
 import struct
 import mediapipe as mp
 import tensorflow as tf
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
-from tensorflow.keras.activations import linear, relu, sigmoid
+from tensorflow.keras.models import load_model
 import numpy as np
 
 
@@ -49,16 +47,16 @@ def receive_live_video(server_port):
         
         # Process the frame with the Pose model
         results = pose.process(frame_rgb)
+        pose1 = results.pose_landmarks.landmark
+        pose_row = list(np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility]for landmark in pose1]).flatten())
+  
+        model = load_model("model_instrusion.h5")
         
-        
-        
-            
-            # Check if the person is standing based on the ankle y-coordinate difference
-        prediction = model.predict(X_dataset[].reshape(1,33*(4)),verbose=None)
+        # Check if the person is standing based on the ankle y-coordinate difference
+        prediction = model.predict(pose_row.reshape(1,33*(4)),verbose=None)
         prediction_p = tf.nn.softmax(prediction)
         yhat = np.argmax(prediction_p)
         if yhat== 0:  # Adjust the threshold as needed
-            
             text = "Normal"
         elif yhat==1:
             text = "Looking back left"
@@ -73,9 +71,6 @@ def receive_live_video(server_port):
         # Display the frame
         cv2.imshow("Atm intrusion detection", frame)
 
-        
-        
-        
         # Check for the 'q' key to quit the loop
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
