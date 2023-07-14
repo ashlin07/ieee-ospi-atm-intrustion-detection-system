@@ -3,7 +3,11 @@ import socket
 import pickle
 import struct
 import mediapipe as mp
-
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.activations import linear, relu, sigmoid
+import numpy as np
 
 
 def receive_live_video(server_port):
@@ -47,24 +51,24 @@ def receive_live_video(server_port):
         results = pose.process(frame_rgb)
         
         # Check if any pose landmarks are detected
-        if results.pose_landmarks:
-            # Get the landmarks for the left and right ankles
-            left_ankle = results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_ANKLE]
-            right_ankle = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_ANKLE]
-            
-            # Calculate the y-coordinate difference between the left and right ankles
-            ankle_y_diff = abs(left_ankle.y - right_ankle.y)
+        
             
             # Check if the person is standing based on the ankle y-coordinate difference
-            if ankle_y_diff < 0.1:  # Adjust the threshold as needed
-                standing = True
-                standing_text = "Standing"
+            prediction = model.predict(X_dataset[random_index].reshape(1,33*(4)),verbose=None)
+            prediction_p = tf.nn.softmax(prediction)
+            yhat = np.argmax(prediction_p)
+            if yhat== 0:  # Adjust the threshold as needed
+                
+                text = "Normal"
+            elif yhat==1:
+                text = "Looking back left"
+            elif yhat==2:
+                text="Looking back right"
             else:
-                standing = False
-                standing_text = "Not Standing"
+                text="Suspicious"
             
             # Display the standing status on the frame
-            cv2.putText(frame, standing_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+            cv2.putText(frame, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
         
         # Display the frame
         cv2.imshow("Standing Position Detection", frame)
