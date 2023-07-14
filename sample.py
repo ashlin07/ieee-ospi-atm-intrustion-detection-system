@@ -59,8 +59,3 @@ with mp_pose.Pose(min_detection_confidence = 0.5,min_tracking_confidence = 0.5) 
         
     cap.release()
     cv2.destroyAllWindows()
-model_new = load_model('/content/model_intrusion.h5')
-prediction = model_new.predict(X_dataset[632].reshape(1,33*(4)),verbose=None)
-prediction_p = tf.nn.softmax(prediction)
-yhat = np.argmax(prediction_p)
-print(yhat)
