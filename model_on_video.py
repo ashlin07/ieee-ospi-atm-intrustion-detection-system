@@ -31,7 +31,7 @@ def run_model(path):
 
                 pose_row = list(np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility]for landmark in pose1]).flatten())
                 
-                model = load_model("model_instrusion.h5")
+                model = load_model('C:\ashlin\ieee-ospi-atm-intrustion-detection-system\model_intrusion.h5')
             
                 # Check if the person is standing based on the ankle y-coordinate difference
                 prediction = model.predict(pose_row.reshape(1,33*(4)),verbose=None)
@@ -62,5 +62,5 @@ def run_model(path):
     cap.release()
     cv2.destroyAllWindows()
 
-run_model()
+run_model('videos\looking_back_left.mp4')
 
