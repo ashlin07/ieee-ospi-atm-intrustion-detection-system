@@ -11,7 +11,7 @@ import numpy as np
 def run_model(path):
     
     
-
+    
   
         model = load_model("model_instrusion.h5")
         
