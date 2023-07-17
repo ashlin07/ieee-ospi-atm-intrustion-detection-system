@@ -1,88 +1,60 @@
 import cv2
-import socket
-import pickle
-import struct
 import mediapipe as mp
-import tensorflow as tf
-from keras.models import load_model
+mp_drawing = mp.solutions.drawing_utils
+mp_pose = mp.solutions.pose
+import csv
+import os
 import numpy as np
 
+num_coords = 33
 
-def receive_live_video(server_port):
-    # Create a socket object
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    
-    # Bind the socket to a specific IP address and port
-    server_socket.bind(('', server_port))
-    
-    # Listen for incoming connections
-    server_socket.listen(1)
-    print("Server is listening for incoming connections...")
-    
-    # Accept a client connection
-    client_socket, client_address = server_socket.accept()
-    print("Connected to client:", client_address)
-    
-    # Create an OpenCV window to display the video
-    cv2.namedWindow("Received Video", cv2.WINDOW_NORMAL)
-    mp_pose = mp.solutions.pose
-    
-    # Load the Pose model
-    pose = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5, min_tracking_confidence=0.5)
-    while True:
-        # Receive the frame size from the client
-        frame_size_data = client_socket.recv(4)
-        frame_size = struct.unpack("!I", frame_size_data)[0]
-        
-        # Receive the serialized frame from the client
-        serialized_frame = b""
-        while len(serialized_frame) < frame_size:
-            serialized_frame += client_socket.recv(frame_size - len(serialized_frame))
-        
-        # Deserialize the frame using pickle
-        frame = pickle.loads(serialized_frame)
+landmarks = ['Class']
+for i in range(1,num_coords+1):
+    landmarks+=['x{}'.format(i),'y{}'.format(i),'z{}'.format(i),'v{}'.format(i)]
 
-        # Convert the frame to RGB
-        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        
-        # Process the frame with the Pose model
-        results = pose.process(frame_rgb)
-        pose1 = results.pose_landmarks.landmark
-        pose_row = list(np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility]for landmark in pose1]).flatten())
-  
-        model = load_model("model_instrusion.h5")
-        
-        # Check if the person is standing based on the ankle y-coordinate difference
-        prediction = model.predict(pose_row.reshape(1,33*(4)),verbose=None)
-        prediction_p = tf.nn.softmax(prediction)
-        yhat = np.argmax(prediction_p)
-        if yhat== 0:  # Adjust the threshold as needed
-            text = "Normal"
-        elif yhat==1:
-            text = "Looking back left"
-        elif yhat==2:
-            text="Looking back right"
+with open('coords.csv', mode='a', newline='') as f:
+    csv_writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    csv_writer.writerow(landmarks)
+len(landmarks)
+
+class_name="Looking back_left"
+cap = cv2.VideoCapture('looking_back_left.mp4')
+with mp_pose.Pose(min_detection_confidence = 0.5,min_tracking_confidence = 0.5) as pose:
+    while cap.isOpened():
+        ret,frame = cap.read()
+        if ret:
+            cv2.namedWindow("Mediapipe_Feed", cv2.WINDOW_NORMAL)
+            cv2.resizeWindow("Mediapipe_Feed", 432,768)
+           #Recolor to RGB
+            image = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+            image.flags.writeable = False
+
+
+            #Mediapipe Pose estimation
+            results = pose.process(image)
+
+            #Recolor to BGR
+            image.flags.writeable = True
+            image = cv2.cvtColor(image,cv2.COLOR_RGB2BGR)
+
+            pose1 = results.pose_landmarks.landmark
+
+            pose_row = list(np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility]for landmark in pose1]).flatten())
+            pose_row.insert(0,class_name)
+
+            with open('coords.csv', mode='a', newline='') as f:
+                csv_writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                csv_writer.writerow(pose_row)
+
+            # print(results)
+            mp_drawing.draw_landmarks(image,results.pose_landmarks,mp_pose.POSE_CONNECTIONS)
+            cv2.imshow('Mediapipe_Feed',image)
+
+            if cv2.waitKey(10) & 0xFF == ord('q'):
+                break
+
         else:
-            text="Suspicious"
-        
-        # Display the standing status on the frame
-        cv2.putText(frame, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
-        
-        # Display the frame
-        cv2.imshow("Atm intrusion detection", frame)
-
-        # Check for the 'q' key to quit the loop
-        if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-    
-    # Close the client socket and the server socket
-    client_socket.close()
-    server_socket.close()
 
-
-
-server_port = 8000  # Replace with your server port
-
-
-receive_live_video(server_port)
-
+    cap.release()
+    cv2.destroyAllWindows()
