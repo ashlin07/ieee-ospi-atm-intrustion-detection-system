@@ -5,8 +5,9 @@ mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 import numpy as np
 import tensorflow as tf
+import keras
 #Video Feed
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture('Normal.mp4')
 with mp_pose.Pose(min_detection_confidence = 0.5,min_tracking_confidence = 0.5) as pose:
     while cap.isOpened():
         ret,frame = cap.read()
@@ -24,13 +25,15 @@ with mp_pose.Pose(min_detection_confidence = 0.5,min_tracking_confidence = 0.5) 
             #Recolor to BGR
             image.flags.writeable = True
             image = cv2.cvtColor(image,cv2.COLOR_RGB2BGR)
-
-            pose1 = results.pose_landmarks.landmark
+            try:
+                pose1 = results.pose_landmarks.landmark
+            except:
+                pass
             # print(pose1)
 
-            pose_row = list(np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility]for landmark in pose1]).flatten())
+            pose_row = np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility]for landmark in pose1]).flatten()
             
-            model = load_model("model_instrusion.h5")
+            model = keras.models.load_model("C:/Users/rehan/OneDrive/Desktop/OSPI/ieee-ospi-atm-intrustion-detection-system/model_intrusion_local.h5")
         
             # Check if the person is standing based on the ankle y-coordinate difference
             prediction = model.predict(pose_row.reshape(1,33*(4)),verbose=None)
