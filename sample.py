@@ -8,6 +8,8 @@ import tensorflow as tf
 import keras
 #Video Feed
 cap = cv2.VideoCapture('Normal.mp4')
+#Video Feed
+cap = cv2.VideoCapture(0)
 with mp_pose.Pose(min_detection_confidence = 0.5,min_tracking_confidence = 0.5) as pose:
     while cap.isOpened():
         ret,frame = cap.read()
@@ -25,6 +27,7 @@ with mp_pose.Pose(min_detection_confidence = 0.5,min_tracking_confidence = 0.5) 
             #Recolor to BGR
             image.flags.writeable = True
             image = cv2.cvtColor(image,cv2.COLOR_RGB2BGR)
+            
             try:
                 pose1 = results.pose_landmarks.landmark
             except:
