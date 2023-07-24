@@ -42,9 +42,9 @@ def run_model(path):
                 # print(pose1)
 
                 pose_row = np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility]for landmark in pose1]).flatten()
-                
+
                 model = load_model("C:/Users/rehan/OneDrive/Desktop/OSPI/ieee-ospi-atm-intrustion-detection-system/model_intrusion_new1.h5")
-                
+
                 # Check if the person is standing based on the ankle y-coordinate difference
                 prediction = model.predict(pose_row.reshape(1,33*(4)),verbose=None)
                 prediction_p = tf.nn.softmax(prediction)
@@ -92,4 +92,5 @@ def run_model(path):
     print(suspicious_time)
 
 run_model(r'videos\test_video.mp4')
+
 
