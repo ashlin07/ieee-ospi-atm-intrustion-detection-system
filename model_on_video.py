@@ -29,9 +29,9 @@ def run_model(path):
                 pose1 = results.pose_landmarks.landmark
                 # print(pose1)
 
-                pose_row = list(np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility]for landmark in pose1]).flatten())
+                pose_row = np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility]for landmark in pose1]).flatten()
                 
-                model = load_model('C:\ashlin\ieee-ospi-atm-intrustion-detection-system\model_intrusion.h5')
+                model = load_model(r'C:\ashlin\ieee-ospi-atm-intrustion-detection-system\model_intrusion.h5')
             
                 # Check if the person is standing based on the ankle y-coordinate difference
                 prediction = model.predict(pose_row.reshape(1,33*(4)),verbose=None)
