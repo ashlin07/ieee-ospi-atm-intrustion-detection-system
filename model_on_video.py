@@ -65,9 +65,10 @@ def run_model(path):
                     suspicious_frame_count+=1
                     if prev_state!="Suspicious":
                         suspicious_count+=1
-                suspicious_time = suspicious_frame_count/fps
+                suspicious_time = suspicious_frame_count/float(fps)
+                looking_back_time = looking_back_count/float(fps)
 
-                if looking_back_count>=3 or suspicious_count>=3 or suspicious_time>5:
+                if looking_back_count>=3 or suspicious_count>=3 or suspicious_time>5 or looking_back_time>5:
                     send_warning(frame)
 
                 prev_state = text
