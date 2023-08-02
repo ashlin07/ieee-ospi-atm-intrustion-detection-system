@@ -14,6 +14,7 @@ import time
 def send_warning(frame):
     word = 'Hello'
     # response = requests.post("http://127.0.0.1:5000/data", data=word)
+    cv2.putText(frame, "Suspicious", (80, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
 
 # Video Feed
 def run_model(path):
@@ -51,7 +52,7 @@ def run_model(path):
 
                     pose_row = np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility]for landmark in pose1]).flatten()
                     
-                    model = load_model("C:/Users/rehan/OneDrive/Desktop/OSPI/ieee-ospi-atm-intrustion-detection-system/model_intrusion_new1.h5")
+                    model = load_model("C:/Users/rehan/OneDrive/Desktop/OSPI/ieee-ospi-atm-intrustion-detection-system/model_intrusion_final.h5")
                     
                     # Check if the person is standing based on the ankle y-coordinate difference
                     prediction = model.predict(pose_row.reshape(1,33*(4)),verbose=None)
@@ -102,9 +103,9 @@ def run_model(path):
                 break
 
     cv2.destroyAllWindows()
-    print(looking_back_count)
-    print(suspicious_count)
-    print(suspicious_time)
+    print("Looking back count - "+str(looking_back_count))
+    print("Suspicious position time - "+str(suspicious_count))
+    print("Suspicious positon time - "+str(suspicious_time))
 
-run_model('http://192.168.29.219:8080/shot.jpg')
+run_model('http://192.168.45.89:8080/shot.jpg')
 
