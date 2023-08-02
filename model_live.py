@@ -25,6 +25,7 @@ def run_model(path):
     prev_state = None
     suspicious_time = 0
     suspicious_frame_count = 0
+    looking_back_time=0
 
     fps = '2'
 

@@ -8,17 +8,17 @@ import numpy as np
 
 num_coords = 33
 
-landmarks = ['Class']
-for i in range(1,num_coords+1):
-    landmarks+=['x{}'.format(i),'y{}'.format(i),'z{}'.format(i),'v{}'.format(i)]
+# landmarks = ['Class']
+# for i in range(1,num_coords+1):
+#     landmarks+=['x{}'.format(i),'y{}'.format(i),'z{}'.format(i),'v{}'.format(i)]
 
-with open('coords.csv', mode='a', newline='') as f:
-    csv_writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    csv_writer.writerow(landmarks)
-len(landmarks)
+# with open('test_coords.csv', mode='a', newline='') as f:
+#     csv_writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+#     csv_writer.writerow(landmarks)
+# len(landmarks)
 
-class_name="Looking back_left"
-cap = cv2.VideoCapture('looking_back_left.mp4')
+class_name=0
+cap = cv2.VideoCapture(r'videos\test_vids\test_normal.mp4')
 with mp_pose.Pose(min_detection_confidence = 0.5,min_tracking_confidence = 0.5) as pose:
     while cap.isOpened():
         ret,frame = cap.read()
@@ -42,7 +42,7 @@ with mp_pose.Pose(min_detection_confidence = 0.5,min_tracking_confidence = 0.5) 
             pose_row = list(np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility]for landmark in pose1]).flatten())
             pose_row.insert(0,class_name)
 
-            with open('coords.csv', mode='a', newline='') as f:
+            with open('test_coords.csv', mode='a', newline='') as f:
                 csv_writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 csv_writer.writerow(pose_row)
 
