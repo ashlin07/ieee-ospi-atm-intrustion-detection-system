@@ -66,7 +66,7 @@ def detect_image(image, yolo, all_classes):
     boxes, classes, scores = yolo.predict(pimage, image.shape)
     if boxes is not None:
         print(len(boxes))
-        if(len(boxes>1)):
+        if len(boxes)>1:
             print("mulitple people")
         draw(image, boxes, scores, classes, all_classes)
 
@@ -121,3 +121,7 @@ path = 'people.jpg'
 image = cv2.imread(path)
 image = detect_image(image, yolo, all_classes)
 cv2.imwrite('res/' + path, image)
+
+
+#video=path
+#detect_video(path,yolo,all_classes)
