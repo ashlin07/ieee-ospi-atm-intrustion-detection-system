@@ -149,10 +149,4 @@ Returns the main frame with pupils highlighted.
 
 ## You want to help?
 
-Your suggestions, bugs reports and pull requests are welcome and appreciated. You can also starring ⭐️ the project!
-
-If the detection of your pupils is not completely optimal, you can send me a video sample of you looking in different directions. I would use it to improve the algorithm.
-
-## Licensing
-
-This project is released by Antoine Lamé under the terms of the MIT Open Source License. View LICENSE for more information.
+please contact arvinnooli
