@@ -2,28 +2,22 @@
 
 ![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)
 ![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-[![GitHub stars](https://img.shields.io/github/stars/antoinelame/GazeTracking.svg?style=social)](https://github.com/antoinelame/GazeTracking/stargazers)
 
 This is a Python (2 and 3) library that provides a **webcam-based eye tracking system**. It gives you the exact position of the pupils and the gaze direction, in real time.
 
-[![Demo](https://i.imgur.com/WNqgQkO.gif)](https://youtu.be/YEZMk1P0-yw)
-
-_🚀 Quick note: I'm looking for job opportunities as a software developer, for exciting projects in ambitious companies. Anywhere in the world. Send me an email!_
-
 ## Installation
 
-Clone this project:
-
-```shell
-git clone https://github.com/antoinelame/GazeTracking.git
-```
+Clone this project
 
 ### For Pip install
 Install these dependencies (NumPy, OpenCV, Dlib):
 
 ```shell
 pip install -r requirements.txt
+```
+```please install
+https://github.com/italojs/facial-landmarks-recognition/blob/master/shape_predictor_68_face_landmarks.dat
+MAKE A FOLDER CALLED "trained_models" in the directory and add the above file there
 ```
 
 > The Dlib library has four primary prerequisites: Boost, Boost.Python, CMake and X11/XQuartx. If you doesn't have them, you can [read this article](https://www.pyimagesearch.com/2017/03/27/how-to-install-dlib/) to know how to easily install them.
@@ -163,10 +157,5 @@ Returns the main frame with pupils highlighted.
 
 ## You want to help?
 
-Your suggestions, bugs reports and pull requests are welcome and appreciated. You can also starring ⭐️ the project!
+please contact arvinnooli from collaborators
 
-If the detection of your pupils is not completely optimal, you can send me a video sample of you looking in different directions. I would use it to improve the algorithm.
-
-## Licensing
-
-This project is released by Antoine Lamé under the terms of the MIT Open Source License. View LICENSE for more information.
