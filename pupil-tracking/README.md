@@ -17,7 +17,7 @@ pip install -r requirements.txt
 ```
 ```please install
 https://github.com/italojs/facial-landmarks-recognition/blob/master/shape_predictor_68_face_landmarks.dat
-MAKE A FOLDER CALLED "trained_models" in the directory and add the above file there
+MAKE A FOLDER CALLED "trained_models" in the "pupil-tracking/gaze_tracking" directory and add the above file there
 ```
 
 > The Dlib library has four primary prerequisites: Boost, Boost.Python, CMake and X11/XQuartx. If you doesn't have them, you can [read this article](https://www.pyimagesearch.com/2017/03/27/how-to-install-dlib/) to know how to easily install them.
