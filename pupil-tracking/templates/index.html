@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flask App UI</title>
+    <style>
+        body {
+            background-color: blue;
+        }
+
+        .notification-box {
+            width: 300px;
+            height: 400px;
+            overflow-y: auto;
+            background-color: white;
+            position: fixed;
+            top: 50px;
+            right: 50px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);}
+        .box {
+            width: 260px;
+            height: 50px;
+            border: 5px solid  rgba(12, 48, 178, 0.762);
+            padding: 10px;
+            margin: 10px;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="notification-box">
+        <div class="box">
+            <div align="center">
+                <h2>Notifications</h2>
+                <ul id="notification-list">
+                    <!-- Notifications will be added here dynamically -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+    <script>
+        // Function to add a new notification to the list
+        function addNotification(message) {
+            var notificationList = document.getElementById("notification-list");
+            var listItem = document.createElement("li");
+            listItem.textContent = message;
+            notificationList.appendChild(listItem);
+        }
+
+        // Create a socket connection to the Flask app
+        const socket = io.connect('http://' + document.domain + ':' + location.port + '/notifications');
+
+        socket.on('connect', function() {
+            console.log('WebSocket connected!');
+        });
+
+        // Listen for new notifications from the Flask app
+        socket.on('new_notification', function(data) {
+            const message = data.message;
+            addNotification(message);
+        });
+    </script>
+</body>
+</html>
